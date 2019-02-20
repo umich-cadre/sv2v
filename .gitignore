@@ -4,6 +4,6 @@ default.svf
 tests/*.elab.v
 tests/*.conv.v
 
-tests/*_sim_clean/
-tests/*_sim_conv/
+tests/*.sim.orig/
+tests/*.sim.conv/
 
