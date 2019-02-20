@@ -8,14 +8,14 @@ module tb_latch;
   integer i;
 
   // Instantiate design and connect design ports with TB signals
-  d_latch  dl0 ( .d (d),
+  dlatch1  dl0 ( .d (d),
     .en (en),
     .rstn (rstn),
     .q (q));
 
   // This initial block forms the stimulus to test the design
   initial begin
-    $monitor ("[%0t] en=%0b d=%0b q=%0b", $time, en, d, q);
+    $monitor ("@@@ [%0t] en=%0b d=%0b q=%0b", $time, en, d, q);
 
     #10
 

@@ -1,11 +1,19 @@
-module dff3 (d, clk, reset, q, qb);
-  input d, clk, reset;
-  output q, qb;
+// This version does not support reset
+
+module dff3 (
+  input  d    ,
+  input  clk  ,
+  input  reset,
+  output q    ,
+  output qb
+);
+
   reg q;
+
   assign qb = ~q;
 
-always @(posedge clk)
-    q <= d;
+  always @(posedge clk)
+      q <= d;
 
 endmodule
 

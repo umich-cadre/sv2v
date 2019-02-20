@@ -1,9 +1,11 @@
 // https://www.chipverify.com/verilog/verilog-d-latch
 //
-module d_latch (  input d,           // 1-bit input pin for data
-                  input en,          // 1-bit input pin for enabling the latch
-                  input rstn,        // 1-bit input pin for active-low reset
-                  output reg q);     // 1-bit output pin for data output
+module dlatch1 (
+   input      d   , // 1-bit input pin for data
+   input      en  , // 1-bit input pin for enabling the latch
+   input      rstn, // 1-bit input pin for active-low reset
+   output reg q     // 1-bit output pin for data output
+);
 
    // This always block is "always" triggered whenever en/rstn/d changes
    // If reset is asserted then output will be zero

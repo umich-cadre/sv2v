@@ -20,7 +20,7 @@ module test ();
   );
 
   initial begin
-    $monitor("[%0t] clk:%0b reset:%0b d:%0b, q:%0b, qb:%0b",$time,clk, reset, d, q, qb);
+    $monitor ("@@@ [%0t] clk:%0b reset:%0b d:%0b, q:%0b, qb:%0b",$time,clk, reset, d, q, qb);
   end
 
   always

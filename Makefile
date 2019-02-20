@@ -31,7 +31,7 @@ $(CONV_TARGETS): %.conv.v : %.orig.v
 	  $(@:%.conv.v=%.orig.v)
 
 # This target recipe performs simulation on the converted test using the umich_lib
-$(SIM_CONV_TARGETS): %.sim.conv : %.conv.v %.tb.v
+$(SIM_CONV_TARGETS): %.sim.conv : %.conv.v %.tb.v umich_lib.v
 	echo $(@:%.sim.conv=%.conv.v)
 	mkdir -p $@ && cd $@ && \
 	vcs -licqueue '-timescale=1ns/1ns' '+vcs+flush+all' '+warn=all' '-sverilog' \
@@ -43,8 +43,8 @@ $(SIM_CONV_TARGETS): %.sim.conv : %.conv.v %.tb.v
 test: $(foreach test,$(TEST_NAMES),test-$(test))
 
 $(foreach test,$(TEST_NAMES),test-$(test)): test-% : $(TEST_DIR)/%.sim.orig $(TEST_DIR)/%.sim.conv
-	-diff $(TEST_DIR)/$*.sim.orig/output.txt $(TEST_DIR)/$*.sim.conv/output.txt
-	# @if [ ! -z "diff $(TEST_DIR)/$*.sim.orig/output.txt $(TEST_DIR)/$*.sim.conv/output.txt" ]; then echo -e "\033[0;31m$* test FAILED - stdout/$* \033[0m"; fi
+	# diff -I '^[^@].*' $(TEST_DIR)/$*.sim.orig/output.txt $(TEST_DIR)/$*.sim.conv/output.txt
+	@if ! diff -I '^[^@].*' $(TEST_DIR)/$*.sim.orig/output.txt $(TEST_DIR)/$*.sim.conv/output.txt ; then echo -e "\033[0;31m$* test FAILED - stdout/$* \033[0m"; fi
 
 # Clean
 clean:
