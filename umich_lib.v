@@ -130,7 +130,7 @@ module UMICH_BUF (
 endmodule
 
 // Arbitrarily supporting up to 16 for now...
-module SELECT_OP (
+module UMICH_SELECT_OP (
   input  DATA1    ,
   input  DATA2    ,
   input  DATA3    ,
@@ -185,12 +185,15 @@ module SELECT_OP (
              1'b0;
 endmodule
 
+module UMICH_ADD_UNS_OP (
+  input [63:0] A,
+  input [63:0] B,
+  output [63:0] Z
+);
 
+assign Z = A + B;
 
-
-
-
-
+endmodule
 
 
 

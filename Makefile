@@ -17,7 +17,7 @@ all: $(SIM_ORIG_TARGETS) $(SIM_CONV_TARGETS)
 $(SIM_ORIG_TARGETS): %.sim.orig : %.orig.v %.tb.v
 	echo $(@:%.sim.orig=%.orig.v) $(@:%.sim.orig=%.tb.v)
 	mkdir -p $@ && cd $@ && \
-	vcs -licqueue '-timescale=1ns/1ns' '+vcs+flush+all' '+warn=all' '-sverilog' \
+	vcs -timescale=1ns/1ns +vcs+flush+all +warn=all -sverilog \
 	$(abspath $(@:%.sim.orig=%.orig.v)) \
 	$(abspath $(@:%.sim.orig=%.tb.v)) \
 	&& ./simv | tee output.txt
@@ -34,7 +34,7 @@ $(CONV_TARGETS): %.conv.v : %.orig.v
 $(SIM_CONV_TARGETS): %.sim.conv : %.conv.v %.tb.v umich_lib.v
 	echo $(@:%.sim.conv=%.conv.v)
 	mkdir -p $@ && cd $@ && \
-	vcs -licqueue '-timescale=1ns/1ns' '+vcs+flush+all' '+warn=all' '-sverilog' \
+	vcs -timescale=1ns/1ns +vcs+flush+all +warn=all -sverilog \
 	$(abspath ./umich_lib.v) \
 	$(abspath $(@:%.sim.conv=%.conv.v)) \
 	$(abspath $(@:%.sim.conv=%.tb.v)) \
