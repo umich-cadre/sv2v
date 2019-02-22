@@ -43,16 +43,13 @@ module UMICH_SEQGEN (
   end
 
   // Flop Behavioral
-  always @(posedge clocked_on or posedge synch_clear or posedge synch_preset) begin
-    if(synch_clear) begin
-      Q_reg <= synch_preset;
-    end else if (synch_enable) begin
-      if(synch_toggle) begin
-        Q_reg <= ~Q_reg;
-      end else begin
-        Q_reg <= next_state;
-      end
-    end
+  always @(posedge clocked_on or posedge clear or posedge preset) begin
+    if(clear)
+      Q_reg <= 1'b0;
+    else if(preset)
+      Q_reg <= 1'b1;
+    else
+      Q_reg <= next_state;
   end
 
 endmodule
