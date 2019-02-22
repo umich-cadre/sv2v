@@ -28,7 +28,7 @@ module test ();
     $dumpfile("dump.vcd");
     $dumpvars(1, test);
 
-    $monitor ("@@@ [%0t] address_write:%0b data_write: write_enable:%0b clk_read:%0b address_read:%0b data_read:%0b",
+    $monitor ("@@@ [%0d] address_write:%0b data_write:%0b write_enable:%0b clk_read:%0b address_read:%0h data_read:%0h",
               $time,address_write, data_write, write_enable, clk_read, address_read, data_read);
 
 

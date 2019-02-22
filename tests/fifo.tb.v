@@ -14,7 +14,7 @@ module jFIFOTb;
 
   initial  begin
     $display("time,\tDATAOUT,\tfull,\tempty,\treset,\twn,\trn,\tDATAIN");
-    $monitor("@@@ [%0d],\t%b,\t%b,\t%b,\t%b,\t%b,\t%b",$time,DATAOUT,full,empty,reset,wn,rn,DATAIN);
+    $monitor("@@@ [%0d],\t%0b,\t%0b,\t%0b,\t%0b,\t%0b,\t%0b",$time,DATAOUT,full,empty,reset,wn,rn,DATAIN);
   end
 
   initial

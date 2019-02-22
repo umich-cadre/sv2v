@@ -15,8 +15,8 @@ module test;
     $dumpfile("dump.vcd");
     $dumpvars(1, test);
 
-    $display("time,\ta,\tout1,\tout2");
-    $monitor("@@@ [%0d],\t%b,\t%b,\t%b",$time,a,out1,out2);
+    $display("time,\t\tclk,\ta,\tout1,\tout2");
+    $monitor("@@@ [%0d],\t%b,\t%b,\t%b,\t%b",$time,clk,a,out1,out2);
 
 
     clk = 0;

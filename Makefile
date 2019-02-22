@@ -1,4 +1,7 @@
 export TEST_DIR = ./tests
+COMPARE_TOOL = bcompare
+VCSFLAGS = -timescale=1ns/1ns +v2k +vc -Mupdate -line -full64 -sverilog -notice -debug_access+all +vcs+initreg+random
+SIMVFLAGS = +vcs+initreg+0
 
 # Get all test files (ends in .orig.v)
 TEST_FILES = $(wildcard $(TEST_DIR)/*.orig.v)
@@ -17,11 +20,11 @@ all: test
 $(SIM_ORIG_TARGETS): %.sim.orig : %.orig.v %.tb.v
 	echo $(@:%.sim.orig=%.orig.v) $(@:%.sim.orig=%.tb.v)
 	mkdir -p $@ && cd $@ && \
-	vcs -timescale=1ns/1ns +vcs+flush+all +warn=all -sverilog \
+	vcs $(VCSFLAGS) \
 	$(abspath $(@:%.sim.orig=%.orig.v)) \
 	$(abspath $(@:%.sim.orig=%.tb.v)) \
 	| tee build.txt \
-	&& ./simv | tee output.txt
+	&& ./simv $(SIMVFLAGS) | tee output.txt
 
 # This target recipe converts the original test to an elaborated and converted version
 $(CONV_TARGETS): %.conv.v : %.orig.v
@@ -35,12 +38,12 @@ $(CONV_TARGETS): %.conv.v : %.orig.v
 $(SIM_CONV_TARGETS): %.sim.conv : %.conv.v %.tb.v umich_lib.v
 	echo $(@:%.sim.conv=%.conv.v)
 	mkdir -p $@ && cd $@ && \
-	vcs -timescale=1ns/1ns +vcs+flush+all +warn=all -sverilog \
+	vcs $(VCSFLAGS) \
 	$(abspath ./umich_lib.v) \
 	$(abspath $(@:%.sim.conv=%.conv.v)) \
 	$(abspath $(@:%.sim.conv=%.tb.v)) \
 	| tee build.txt \
-	&& ./simv | tee output.txt
+	&& ./simv $(SIMVFLAGS) | tee output.txt
 
 test: $(foreach test,$(TEST_NAMES),test-$(test))
 
@@ -60,3 +63,9 @@ $(foreach test,$(TEST_NAMES),clean-$(test)): clean-% :
 	rm -f $(TEST_DIR)/$*.elab.v
 	rm -rf $(TEST_DIR)/$*.sim.orig
 	rm -rf $(TEST_DIR)/$*.sim.conv
+
+$(foreach test,$(TEST_NAMES),diff-$(test)): diff-% :
+	$(COMPARE_TOOL) $(TEST_DIR)/$*.sim.orig/output.txt $(TEST_DIR)/$*.sim.conv/output.txt
+
+$(foreach test,$(TEST_NAMES),dve-conv-$(test)): dve-conv-% : $(TEST_DIR)/%.sim.conv
+	$</simv $(SIMVFLAGS) -gui
