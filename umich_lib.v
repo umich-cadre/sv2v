@@ -1,3 +1,14 @@
+// =============================================================================
+//   _____ ______ ____   _____ ______ _   _
+//  / ____|  ____/ __ \ / ____|  ____| \ | |
+// | (___ | |__ | |  | | |  __| |__  |  \| |
+//  \___ \|  __|| |  | | | |_ |  __| | . ` |
+//  ____) | |___| |__| | |__| | |____| |\  |
+// |_____/|______\___\_\\_____|______|_| \_|
+//
+// =============================================================================
+
+
 module UMICH_SEQGEN (
   input  clear       ,
   input  preset      ,
@@ -14,10 +25,10 @@ module UMICH_SEQGEN (
 
   reg Q_latch;
   reg Q_reg  ;
-  assign Q       = ~synch_enable ? Q_latch :
-                   clear ? 1'b0 :
-                   preset ? 1'b1 :
-                   Q_reg;
+  assign Q = ~synch_enable ? Q_latch :
+    clear ? 1'b0 :
+    preset ? 1'b1 :
+    Q_reg;
 
   // Latch Behavioral
   always @(enable or preset or clear or data_in) begin
@@ -42,6 +53,16 @@ module UMICH_SEQGEN (
   end
 
 endmodule
+
+// =============================================================================
+//  ____           _____ _____ _____
+// |  _ \   /\    / ____|_   _/ ____|
+// | |_) | /  \  | (___   | || |
+// |  _ < / /\ \  \___ \  | || |
+// | |_) / ____ \ ____) |_| || |____
+// |____/_/    \_\_____/|_____\_____|
+//
+// =============================================================================
 
 
 module UMICH_NOT (
@@ -105,6 +126,14 @@ module UMICH_OR4 (
   assign Z = A | B | C | D;
 endmodule
 
+module UMICH_XOR2 (
+  input  A,
+  input  B,
+  output Z
+);
+  assign Z = A ^ B;
+endmodule
+
 module UMICH_mux (
   input  DATA1   ,
   input  DATA2   ,
@@ -116,9 +145,9 @@ module UMICH_mux (
 );
 
   assign Z = CONTROL1 ? DATA1 :
-             CONTROL2 ? DATA2 :
-             CONTROL3 ? DATA3 :
-             1'b0;
+    CONTROL2 ? DATA2 :
+    CONTROL3 ? DATA3 :
+    1'b0;
 
 endmodule
 
@@ -167,36 +196,68 @@ module UMICH_SELECT_OP (
 );
 
   assign Z = CONTROL1 ? DATA1 :
-             CONTROL2 ? DATA2 :
-             CONTROL3 ? DATA3 :
-             CONTROL4 ? DATA4 :
-             CONTROL5 ? DATA5 :
-             CONTROL6 ? DATA6 :
-             CONTROL7 ? DATA7 :
-             CONTROL8 ? DATA8 :
-             CONTROL9 ? DATA9 :
-             CONTROL10 ? DATA10 :
-             CONTROL11 ? DATA11 :
-             CONTROL12 ? DATA12 :
-             CONTROL13 ? DATA13 :
-             CONTROL14 ? DATA14 :
-             CONTROL15 ? DATA15 :
-             CONTROL16 ? DATA16 :
-             1'b0;
+    CONTROL2 ? DATA2 :
+    CONTROL3 ? DATA3 :
+    CONTROL4 ? DATA4 :
+    CONTROL5 ? DATA5 :
+    CONTROL6 ? DATA6 :
+    CONTROL7 ? DATA7 :
+    CONTROL8 ? DATA8 :
+    CONTROL9 ? DATA9 :
+    CONTROL10 ? DATA10 :
+    CONTROL11 ? DATA11 :
+    CONTROL12 ? DATA12 :
+    CONTROL13 ? DATA13 :
+    CONTROL14 ? DATA14 :
+    CONTROL15 ? DATA15 :
+    CONTROL16 ? DATA16 :
+    1'b0;
 endmodule
+
+// =============================================================================
+//   _______     ___   _ _______ _    _ ______ _______ _____ _____
+//  / ____\ \   / / \ | |__   __| |  | |  ____|__   __|_   _/ ____|
+// | (___  \ \_/ /|  \| |  | |  | |__| | |__     | |    | || |
+//  \___ \  \   / | . ` |  | |  |  __  |  __|    | |    | || |
+//  ____) |  | |  | |\  |  | |  | |  | | |____   | |   _| || |____
+// |_____/   |_|  |_| \_|  |_|  |_|  |_|______|  |_|  |_____\_____|
+//
+// =============================================================================
 
 module UMICH_ADD_UNS_OP (
-  input [63:0] A,
-  input [63:0] B,
-  output [63:0] Z
+  input  unsigned [63:0] A,
+  input  unsigned [63:0] B,
+  output unsigned [63:0] Z
 );
+  assign Z = A + B;
+endmodule
 
-assign Z = A + B;
+module UMICH_ADD_TC_OP (
+  input  signed [63:0] A,
+  input  signed [63:0] B,
+  output signed [63:0] Z
+);
+  assign Z = A + B;
+endmodule
 
+// Arithmetic shift unsigned unsigned op
+module UMICH_ASH_UNS_UNS_OP (
+  input  unsigned [63:0] A ,
+  input  unsigned [63:0] SH,
+  output unsigned [63:0] Z
+);
+  assign Z = A << SH;
 endmodule
 
 
-
+// equal
+module EQ_UNS_OP (
+  input  unsigned [63:0] A,
+  input  unsigned [63:0] B,
+  output unsigned        Z
+);
+  assign Z = (A == B);
+endmodule
 
 
 

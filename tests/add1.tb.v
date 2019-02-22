@@ -3,37 +3,34 @@ module add1_tb (
 
 reg [63:0] A;
 reg [63:0] B;
-wire [63:0] Z;
+reg signed [63:0] C;
+reg signed [63:0] D;
+wire signed [63:0] Z;
 
 add1 i_add1 (
  .A(A),
  .B(B),
+ .C(C),
+ .D(D),
  .Z(Z));
 
 initial begin
-  $monitor ("@@@ [%0t] A:%0b B:%0b Z:%0b",$time,A, B, Z);
+  $monitor ("@@@ [%0t] A:%0d B: C:%0d D:%0d Z:%0d",$time,A, B, C, D, Z);
 end
 
 initial begin
  # 1;
- A = 5;
- B = 10;
- # 1;
- # 1;
- A = -5;
- B = 10;
 
+for (int i = 0; i < 20; i++) begin
+ A = $random;
+ B = $random;
+ C = $random;
+ D = $random;
  # 1;
- # 1;
- A = -5;
- B = 10;
+end
 
- # 1;
- # 1;
  A = {64{1'b1}};
- B = 10;
-
- # 1;
+ C = {64{1'b1}};
  # 1;
 
 end

@@ -53,3 +53,8 @@ clean:
 	rm -rf $(SIM_ORIG_TARGETS)
 	rm -rf $(SIM_CONV_TARGETS)
 
+$(foreach test,$(TEST_NAMES),clean-$(test)): clean-% :
+	rm -f $(TEST_DIR)/$*.conv.v
+	rm -f $(TEST_DIR)/$*.elab.v
+	rm -rf $(TEST_DIR)/$*.sim.orig
+	rm -rf $(TEST_DIR)/$*.sim.conv
