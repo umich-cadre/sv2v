@@ -11,7 +11,7 @@ SIM_ORIG_TARGETS := $(patsubst %.orig.v,%.sim.orig,$(wildcard $(TEST_DIR)/*.orig
 SIM_CONV_TARGETS := $(patsubst %.orig.v,%.sim.conv,$(wildcard $(TEST_DIR)/*.orig.v))
 
 # Default build target
-all: $(SIM_ORIG_TARGETS) $(SIM_CONV_TARGETS)
+all: test
 
 # This target recipe performs simulation on the original test
 $(SIM_ORIG_TARGETS): %.sim.orig : %.orig.v %.tb.v
@@ -20,6 +20,7 @@ $(SIM_ORIG_TARGETS): %.sim.orig : %.orig.v %.tb.v
 	vcs -timescale=1ns/1ns +vcs+flush+all +warn=all -sverilog \
 	$(abspath $(@:%.sim.orig=%.orig.v)) \
 	$(abspath $(@:%.sim.orig=%.tb.v)) \
+	| tee build.txt \
 	&& ./simv | tee output.txt
 
 # This target recipe converts the original test to an elaborated and converted version
@@ -38,13 +39,14 @@ $(SIM_CONV_TARGETS): %.sim.conv : %.conv.v %.tb.v umich_lib.v
 	$(abspath ./umich_lib.v) \
 	$(abspath $(@:%.sim.conv=%.conv.v)) \
 	$(abspath $(@:%.sim.conv=%.tb.v)) \
+	| tee build.txt \
 	&& ./simv | tee output.txt
 
 test: $(foreach test,$(TEST_NAMES),test-$(test))
 
 $(foreach test,$(TEST_NAMES),test-$(test)): test-% : $(TEST_DIR)/%.sim.orig $(TEST_DIR)/%.sim.conv
-	# diff -I '^[^@].*' $(TEST_DIR)/$*.sim.orig/output.txt $(TEST_DIR)/$*.sim.conv/output.txt
-	@if ! diff -I '^[^@].*' $(TEST_DIR)/$*.sim.orig/output.txt $(TEST_DIR)/$*.sim.conv/output.txt ; then echo -e "\033[0;31m$* test FAILED - stdout/$* \033[0m"; fi
+	@# diff -I '^[^@].*' $(TEST_DIR)/$*.sim.orig/output.txt $(TEST_DIR)/$*.sim.conv/output.txt
+	@if ! diff -I '^[^@].*' $(TEST_DIR)/$*.sim.orig/output.txt $(TEST_DIR)/$*.sim.conv/output.txt > /dev/null ; then echo -e "\033[0;31m$* test FAILED - $* \033[0m"; fi
 
 # Clean
 clean:

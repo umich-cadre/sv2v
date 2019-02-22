@@ -8,7 +8,7 @@ module test ();
   wire qb   ;
 
   reg [5:0] delay;
-  integer i;
+  integer   i    ;
 
   // Instantiate design under test
   dff1 DFF (

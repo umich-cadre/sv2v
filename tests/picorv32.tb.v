@@ -12,7 +12,7 @@
 `ifndef VERILATOR
 module testbench #(
 	parameter AXI_TEST = 0,
-	parameter VERBOSE = 0
+	parameter VERBOSE = 1
 );
 	reg clk = 1;
 	reg resetn = 0;
@@ -26,10 +26,10 @@ module testbench #(
 	end
 
 	initial begin
-		if ($test$plusargs("vcd")) begin
+		// if ($test$plusargs("vcd")) begin
 			$dumpfile("testbench.vcd");
 			$dumpvars(0, testbench);
-		end
+		// end
 		repeat (1000000) @(posedge clk);
 		$display("TIMEOUT");
 		$finish;
@@ -381,7 +381,7 @@ module axi4_memory #(
 
 	task handle_axi_rvalid; begin
 		if (verbose)
-			$display("RD: ADDR=%08x DATA=%08x%s", latched_raddr, memory[latched_raddr >> 2], latched_rinsn ? " INSN" : "");
+			$display("@@@ RD: ADDR=%08x DATA=%08x%s", latched_raddr, memory[latched_raddr >> 2], latched_rinsn ? " INSN" : "");
 		if (latched_raddr < 64*1024) begin
 			mem_axi_rdata <= memory[latched_raddr >> 2];
 			mem_axi_rvalid <= 1;
@@ -394,7 +394,7 @@ module axi4_memory #(
 
 	task handle_axi_bvalid; begin
 		if (verbose)
-			$display("WR: ADDR=%08x DATA=%08x STRB=%04b", latched_waddr, latched_wdata, latched_wstrb);
+			$display("@@@ WR: ADDR=%08x DATA=%08x STRB=%04b", latched_waddr, latched_wdata, latched_wstrb);
 		if (latched_waddr < 64*1024) begin
 			if (latched_wstrb[0]) memory[latched_waddr >> 2][ 7: 0] <= latched_wdata[ 7: 0];
 			if (latched_wstrb[1]) memory[latched_waddr >> 2][15: 8] <= latched_wdata[15: 8];
@@ -404,9 +404,9 @@ module axi4_memory #(
 		if (latched_waddr == 32'h1000_0000) begin
 			if (verbose) begin
 				if (32 <= latched_wdata && latched_wdata < 128)
-					$display("OUT: '%c'", latched_wdata[7:0]);
+					$display("@@@ OUT: '%c'", latched_wdata[7:0]);
 				else
-					$display("OUT: %3d", latched_wdata);
+					$display("@@@ OUT: %3d", latched_wdata);
 			end else begin
 				$write("%c", latched_wdata[7:0]);
 `ifndef VERILATOR
