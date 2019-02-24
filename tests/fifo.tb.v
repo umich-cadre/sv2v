@@ -1,10 +1,10 @@
-module jFIFOTb;
+module fifoTb;
   wire [7:0] DATAOUT;
   wire full, empty;
   reg clock, reset, wn, rn;
   reg [7:0] DATAIN;
 
-  jFIFO jfifo(DATAOUT, full, empty, clock, reset, wn, rn, DATAIN);
+  fifo fifo_i(DATAOUT, full, empty, clock, reset, wn, rn, DATAIN);
 
 
   //enabling the wave dump

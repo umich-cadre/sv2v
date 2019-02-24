@@ -22,13 +22,15 @@ echo "Output Elaborated File: $OUTPUT_ELAB_FILE_NAME"
 echo "Output Converted File: $OUTPUT_CONV_FILE_NAME"
 echo "System Verilog Files: $VERILOG_FILES"
 
-dc_shell -x "
+dc_shell-t -x "
   set hdlin_infer_mux none; \
   if { [read_verilog $VERILOG_FILES] == \"\" } { exit 1 } ; \
   current_design $TOP_DESIGN ; \
   write -format verilog -hierarchy -output $OUTPUT_ELAB_FILE_NAME [get_object_name [get_designs]]; \
   exit
 "
+
+
 
 if [ $? -eq 0 ]
 then

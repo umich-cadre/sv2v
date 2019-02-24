@@ -15,7 +15,7 @@ module tb_4to1_mux;
 
    // Instantiate one of the designs, in this case, we have used the design with case statement
    // Connect testbench variables declared above with those in the design
-   mux_4to1_case  mux0 (   .a (a),
+   mux  mux0 (   .a (a),
                            .b (b),
                            .c (c),
                            .d (d),

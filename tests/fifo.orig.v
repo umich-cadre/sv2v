@@ -1,7 +1,7 @@
 // This is linear queue / FIFO
 // The queue length 8
 // The data width is also 8 bits
-module jFIFO(DATAOUT, full, empty, clock, reset, wn, rn, DATAIN);
+module fifo(DATAOUT, full, empty, clock, reset, wn, rn, DATAIN);
   output reg [7:0] DATAOUT;
   output full, empty;
   input [7:0] DATAIN;

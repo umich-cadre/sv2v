@@ -282,82 +282,82 @@ endmodule
 
 // TODO: MUX implementation does not work. Working around the issue by
 //       forcing dc_shell to no use muxes (it will use select_op instead).
-module UMICH_MUX_OP (
-  input      [31:0] D0 ,
-  input      [31:0] D1 ,
-  input      [31:0] D2 ,
-  input      [31:0] D3 ,
-  input      [31:0] D4 ,
-  input      [31:0] D5 ,
-  input      [31:0] D6 ,
-  input      [31:0] D7 ,
-  input      [31:0] D8 ,
-  input      [31:0] D9 ,
-  input      [31:0] D10,
-  input      [31:0] D11,
-  input      [31:0] D12,
-  input      [31:0] D13,
-  input      [31:0] D14,
-  input      [31:0] D15,
-  input      [31:0] D16,
-  input      [31:0] D17,
-  input      [31:0] D18,
-  input      [31:0] D19,
-  input      [31:0] D20,
-  input      [31:0] D21,
-  input      [31:0] D22,
-  input      [31:0] D23,
-  input      [31:0] D24,
-  input      [31:0] D25,
-  input      [31:0] D26,
-  input      [31:0] D27,
-  input      [31:0] D28,
-  input      [31:0] D29,
-  input      [31:0] D30,
-  input      [31:0] D31,
-  input             S0 ,
-  input             S1 ,
-  input             S2 ,
-  input             S3 ,
-  input             S4 ,
-  output reg [31:0] Z
-);
+// module UMICH_MUX_OP (
+//   input      [31:0] D0 ,
+//   input      [31:0] D1 ,
+//   input      [31:0] D2 ,
+//   input      [31:0] D3 ,
+//   input      [31:0] D4 ,
+//   input      [31:0] D5 ,
+//   input      [31:0] D6 ,
+//   input      [31:0] D7 ,
+//   input      [31:0] D8 ,
+//   input      [31:0] D9 ,
+//   input      [31:0] D10,
+//   input      [31:0] D11,
+//   input      [31:0] D12,
+//   input      [31:0] D13,
+//   input      [31:0] D14,
+//   input      [31:0] D15,
+//   input      [31:0] D16,
+//   input      [31:0] D17,
+//   input      [31:0] D18,
+//   input      [31:0] D19,
+//   input      [31:0] D20,
+//   input      [31:0] D21,
+//   input      [31:0] D22,
+//   input      [31:0] D23,
+//   input      [31:0] D24,
+//   input      [31:0] D25,
+//   input      [31:0] D26,
+//   input      [31:0] D27,
+//   input      [31:0] D28,
+//   input      [31:0] D29,
+//   input      [31:0] D30,
+//   input      [31:0] D31,
+//   input             S0 ,
+//   input             S1 ,
+//   input             S2 ,
+//   input             S3 ,
+//   input             S4 ,
+//   output reg [31:0] Z
+// );
 
-  assign Z =
-    (S4 &  S3 &  S2 &  S1 &  S0) ? D31 :
-    (S4 &  S3 &  S2 &  S1 & ~S0) ? D30 :
-    (S4 &  S3 &  S2 & ~S1 &  S0) ? D29 :
-    (S4 &  S3 &  S2 & ~S1 & ~S0) ? D28 :
-    (S4 &  S3 & ~S2 &  S1 &  S0) ? D27 :
-    (S4 &  S3 & ~S2 &  S1 & ~S0) ? D26 :
-    (S4 &  S3 & ~S2 & ~S1 &  S0) ? D25 :
-    (S4 &  S3 & ~S2 & ~S1 & ~S0) ? D24 :
-    (S4 & ~S3 &  S2 &  S1 &  S0) ? D23 :
-    (S4 & ~S3 &  S2 &  S1 & ~S0) ? D22 :
-    (S4 & ~S3 &  S2 & ~S1 &  S0) ? D21 :
-    (S4 & ~S3 &  S2 & ~S1 & ~S0) ? D20 :
-    (S4 & ~S3 & ~S2 &  S1 &  S0) ? D19 :
-    (S4 & ~S3 & ~S2 &  S1 & ~S0) ? D18 :
-    (S4 & ~S3 & ~S2 & ~S1 &  S0) ? D17 :
-    (S4 & ~S3 & ~S2 & ~S1 & ~S0) ? D16 :
-    (S3 &  S2 &  S1 &  S0) ? D15 :
-    (S3 &  S2 &  S1 & ~S0) ? D14 :
-    (S3 &  S2 & ~S1 &  S0) ? D13 :
-    (S3 &  S2 & ~S1 & ~S0) ? D12 :
-    (S3 & ~S2 &  S1 &  S0) ? D11 :
-    (S3 & ~S2 &  S1 & ~S0) ? D10 :
-    (S3 & ~S2 & ~S1 &  S0) ? D9 :
-    (S3 & ~S2 & ~S1 & ~S0) ? D8 :
-    (S2 &  S1 &  S0) ? D7 :
-    (S2 &  S1 & ~S0) ? D6 :
-    (S2 & ~S1 &  S0) ? D5 :
-    (S2 & ~S1 & ~S0) ? D4 :
-    (S1 &  S0) ? D3 :
-    (S1 & ~S0) ? D2 :
-    (S0) ? D1 :
-    D0;
+//   assign Z =
+//     (S4 &  S3 &  S2 &  S1 &  S0) ? D31 :
+//     (S4 &  S3 &  S2 &  S1 & ~S0) ? D30 :
+//     (S4 &  S3 &  S2 & ~S1 &  S0) ? D29 :
+//     (S4 &  S3 &  S2 & ~S1 & ~S0) ? D28 :
+//     (S4 &  S3 & ~S2 &  S1 &  S0) ? D27 :
+//     (S4 &  S3 & ~S2 &  S1 & ~S0) ? D26 :
+//     (S4 &  S3 & ~S2 & ~S1 &  S0) ? D25 :
+//     (S4 &  S3 & ~S2 & ~S1 & ~S0) ? D24 :
+//     (S4 & ~S3 &  S2 &  S1 &  S0) ? D23 :
+//     (S4 & ~S3 &  S2 &  S1 & ~S0) ? D22 :
+//     (S4 & ~S3 &  S2 & ~S1 &  S0) ? D21 :
+//     (S4 & ~S3 &  S2 & ~S1 & ~S0) ? D20 :
+//     (S4 & ~S3 & ~S2 &  S1 &  S0) ? D19 :
+//     (S4 & ~S3 & ~S2 &  S1 & ~S0) ? D18 :
+//     (S4 & ~S3 & ~S2 & ~S1 &  S0) ? D17 :
+//     (S4 & ~S3 & ~S2 & ~S1 & ~S0) ? D16 :
+//     (S3 &  S2 &  S1 &  S0) ? D15 :
+//     (S3 &  S2 &  S1 & ~S0) ? D14 :
+//     (S3 &  S2 & ~S1 &  S0) ? D13 :
+//     (S3 &  S2 & ~S1 & ~S0) ? D12 :
+//     (S3 & ~S2 &  S1 &  S0) ? D11 :
+//     (S3 & ~S2 &  S1 & ~S0) ? D10 :
+//     (S3 & ~S2 & ~S1 &  S0) ? D9 :
+//     (S3 & ~S2 & ~S1 & ~S0) ? D8 :
+//     (S2 &  S1 &  S0) ? D7 :
+//     (S2 &  S1 & ~S0) ? D6 :
+//     (S2 & ~S1 &  S0) ? D5 :
+//     (S2 & ~S1 & ~S0) ? D4 :
+//     (S1 &  S0) ? D3 :
+//     (S1 & ~S0) ? D2 :
+//     (S0) ? D1 :
+//     D0;
 
-endmodule
+// endmodule
 
 // =============================================================================
 //   _______     ___   _ _______ _    _ ______ _______ _____ _____

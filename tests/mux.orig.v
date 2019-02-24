@@ -1,5 +1,5 @@
 // Code your design here
-module mux_4to1_case ( input [31:0] a,                 // 4-bit input called a
+module mux ( input [31:0] a,                 // 4-bit input called a
                        input [31:0] b,                 // 4-bit input called b
                        input [31:0] c,                 // 4-bit input called c
                        input [31:0] d,                 // 4-bit input called d
