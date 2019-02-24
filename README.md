@@ -14,23 +14,23 @@ This is the script does mainly the following things:
 2. Change the module names in the converted file into UMICH_{previous_name}
 **REMARK** 
 Add the line at the end of sv2v.sh everytime we add a new module to the umich_lib.v:
-'''bash
+```bash
 sed -i 's/\b{original_module_name}\b/UMICH_{original_module_name}/' $OUTPUT_CONV_FILE_NAME
-'''
+```
 ## Makefile
 To run an individual test:
-'''Makefile
+```Makefile
 make test-{test_name}
-'''
+```
 To run all the tests:
-'''Makefile
+```Makefile
 make test
-'''
+```
 After running the command, the diff result between the one running against our library and the correct will be printed out.
 The result will be stored in the *tests* folder. The result contains two folders, the one with the correct result and one with our result.
 To remove all the generated results, run:
-'''Makefile
+```Makefile
 make clean
-'''
+```
 
 
