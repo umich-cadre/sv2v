@@ -38,6 +38,7 @@ $(SIM_ORIG_TARGETS): %.sim.orig : %.orig.v %.tb.v
 $(CONV_TARGETS): %.conv.v : %.orig.v
 	$(CONV_TOOL) \
 	  $(patsubst %.conv.v,%,$(notdir $@)) \
+	  . \
 	  $(@:%.conv.v=%.elab.v) \
 	  $@ \
 	  $(@:%.conv.v=%.orig.v)

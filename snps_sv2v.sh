@@ -1,36 +1,36 @@
 #!/bin/bash
 
-if [ $# -lt 3 ]
+if [ $# -lt 4 ]
   then
-  echo "Usage: sv2v.sh {top-level-name} {output-elab-file} {output-convert-file} {file1.sv file2.sv ...}"
-  echo "Example: sv2v.sh dff dff.out.v dff.sv"
+  echo "Usage: snps_sv2v.sh {top-level-name} {include-path} {output-elab-file} {output-convert-file} {file1.sv file2.sv ...}"
+  echo "Example: snps_sv2v.sh dff src/include dff.out.v dff.sv"
   exit 1
 fi
 
 TOP_DESIGN=$1
-OUTPUT_ELAB_FILE_NAME=$2
-OUTPUT_CONV_FILE_NAME=$3
+INCLUDE_PATH=$2
+OUTPUT_ELAB_FILE_NAME=$3
+OUTPUT_CONV_FILE_NAME=$4
 
-for var in "${@:4}"
+for var in "${@:5}"
   do
   VERILOG_FILES="$var $VERILOG_FILES"
 done
 
-
 echo "Top Level Design: $TOP_DESIGN"
+echo "Verilog Include path: $INCLUDE_PATH"
 echo "Output Elaborated File: $OUTPUT_ELAB_FILE_NAME"
 echo "Output Converted File: $OUTPUT_CONV_FILE_NAME"
 echo "System Verilog Files: $VERILOG_FILES"
 
 dc_shell-t -x "
   set hdlin_infer_mux none; \
+  set_app_var search_path $INCLUDE_PATH ; \
   if { [read_verilog $VERILOG_FILES] == \"\" } { exit 1 } ; \
   current_design $TOP_DESIGN ; \
   write -format verilog -hierarchy -output $OUTPUT_ELAB_FILE_NAME [get_object_name [get_designs]]; \
   exit
 "
-
-
 
 if [ $? -eq 0 ]
 then
