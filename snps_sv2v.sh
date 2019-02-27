@@ -25,9 +25,9 @@ echo "System Verilog Files: $VERILOG_FILES"
 
 dc_shell-t -x "
   set hdlin_infer_mux none; \
-  set_app_var search_path $INCLUDE_PATH ; \
-  if { [read_verilog $VERILOG_FILES] == \"\" } { exit 1 } ; \
-  current_design $TOP_DESIGN ; \
+  set_app_var search_path {. $INCLUDE_PATH} ; \
+  if { [analyze -format sverilog {$VERILOG_FILES}] == \"\" } { exit 1 } ; \
+  elaborate $TOP_DESIGN ; \
   write -format verilog -hierarchy -output $OUTPUT_ELAB_FILE_NAME [get_object_name [get_designs]]; \
   exit
 "
