@@ -20,22 +20,24 @@ module UMICH_SEQGEN (
   input      synch_preset, // TODO ? - unused
   input      synch_toggle, // TODO ? - unused
   input      synch_enable,
-  output reg Q
+  output     Q
 );
 
   reg Q_latch;
   reg Q_reg  ;
 
-  always @(*) begin
-    if(clear)
-      Q = 1'b0;
-    else if(preset)
-      Q = 1'b1;
-    else if(synch_enable)
-      Q = Q_reg;
-    else if(enable)
-      Q = data_in;
-  end
+  // always @(*) begin
+  //   if(clear)
+  //     Q = 1'b0;
+  //   else if(preset)
+  //     Q = 1'b1;
+  //   else if(synch_enable)
+  //     Q = Q_reg;
+  //   else if(enable)
+  //     Q = data_in;
+  // end
+
+  assign Q = clear ? 1'b0 : preset ? 1'b1 : enable ? data_in : Q_reg;
 
   // // Latch Behavioral
   // always @(enable or preset or clear or data_in) begin
