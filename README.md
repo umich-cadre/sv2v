@@ -2,7 +2,7 @@
 # sv2v - System Verilog to Verilog
 sv2v is a script that converts System Verilog code to Verilog code using commercial tools. The cdn_sv2v.sh script uses Cadence Genus while the snps_sv2v.sh script uses Synopsys Design Compiler. The commercial tools are used to elaborate the design and print out the intermediate/generic verilog before synthesis.
 
-##Usage:
+## Usage:
 
 **Genus**
 
