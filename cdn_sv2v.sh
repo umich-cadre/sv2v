@@ -3,7 +3,7 @@
 if [ $# -lt 4 ]
   then
   echo "Usage: cdn_sv2v.sh {top-level-name} {include-path} {output-elab-file} {output-convert-file} {file1.sv file2.sv ...}"
-  echo "Example: snps_sv2v.sh dff src/include dff.out.v dff.sv"
+  echo "Example: cdn_sv2v.sh dff src/include dff.elab.v dff.out.v dff.sv"
   exit 1
 fi
 
